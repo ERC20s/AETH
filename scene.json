@@ -188,5 +188,9 @@
       "102,133"
     ],
     "base": "87,129"
-  }
+  },
+  "requiredPermissions": [
+    "ALLOW_TO_MOVE_PLAYER_INSIDE_SCENE"
+  ],
+  "featureToggles": {}
 }
