@@ -21,7 +21,22 @@ engine.addEntity(astar);
 
 const astar = new Entity();
 astar.addComponent(new GLTFShape("models/monkey.glb"))
-astar.addComponent(new Transform({ position: new Vector3(120, 0,40), rotation: Quaternion.Euler(0, 0, 0) }))
+astar.addComponent(new Transform({ position: new Vector3(120, 0, 40), rotation: Quaternion.Euler(0, 90, 0) }))
+astar.addComponent(
+  new OnPointerDown(() => {
+    // openExternalURL("https://polkadot.network/")
+  }, {
+    hoverText: "Buy this NFT!",
+    distance: 300
+  })
+  // new OnPointerDown(
+  //   (_e) => {
+  //     movePlayerTo({ x: 150, y: 100, z: -40 }, { x: 55, y: 88, z: 40 })
+  //   },
+  //   { hoverText: "To the moon!",
+  //   distance: 150,  
+  // })
+)
 engine.addEntity(astar);
 
 const logo = new Entity();
@@ -160,7 +175,7 @@ NextButton0.sourceWidth = 75
 NextButton0.sourceHeight = 75
 NextButton0.visible = false
 
-    openExternalURL("https://astar.network/")
+    // openExternalURL("https://astar.network/")
   },
     { hoverText: "Astar Network!",
     distance: 100, }
