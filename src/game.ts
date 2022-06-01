@@ -21,7 +21,7 @@ engine.addEntity(astar);
 
 const astar = new Entity();
 astar.addComponent(new GLTFShape("models/monkey.glb"))
-astar.addComponent(new Transform({ position: new Vector3(20, 0, 104), rotation: Quaternion.Euler(0, 0, 0) }))
+astar.addComponent(new Transform({ position: new Vector3(120, 0,40), rotation: Quaternion.Euler(0, 0, 0) }))
 engine.addEntity(astar);
 
 const logo = new Entity();
