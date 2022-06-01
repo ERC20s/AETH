@@ -19,6 +19,11 @@ astar.addComponent(new GLTFShape("models/walls.glb"))
 astar.addComponent(new Transform({ position: new Vector3(0, 0, 96), rotation: Quaternion.Euler(0, 90, 0) }))
 engine.addEntity(astar);
 
+const astar = new Entity();
+astar.addComponent(new GLTFShape("models/monkey.glb"))
+astar.addComponent(new Transform({ position: new Vector3(20, 0, 104), rotation: Quaternion.Euler(0, 0, 0) }))
+engine.addEntity(astar);
+
 const logo = new Entity();
 logo.addComponent(new GLTFShape("models/logo2.glb"))
 logo.addComponent(new Transform({ position: new Vector3(128, 44, 32), rotation: Quaternion.Euler(0, 0, 0) }))
@@ -95,8 +100,8 @@ engine.addEntity(items2);
 // engine.addEntity(socialDiscord);
 
 
-
-
+const canvas = new UICanvas()
+const imageTexture = new Texture('images/UI_Guestbook.png')
 
 
 const a1 = new Entity();
@@ -120,6 +125,41 @@ a2.addComponent(new Transform({ position: new Vector3(120, 8, -2), scale: new Ve
 a2.addComponent(new GLTFShape("models/astar2.glb"));
 a2.addComponent(
   new OnPointerDown(() => {
+    const inventoryContainer = new UIContainerStack(canvas)
+    inventoryContainer.adaptWidth = true
+    inventoryContainer.adaptHeight = true
+    inventoryContainer.width = 200
+    inventoryContainer.height = 75
+    inventoryContainer.positionY = 100
+    inventoryContainer.positionX = 0
+    inventoryContainer.color = Color4.Yellow()
+    inventoryContainer.hAlign = "left"
+    inventoryContainer.vAlign = "bottom"
+    inventoryContainer.stackOrientation = UIStackOrientation.VERTICAL
+    inventoryContainer.opacity = 0.1
+
+    const sname = new UIText(canvas)
+sname.value = "0.1 ASTR"
+sname.width = 76
+sname.height = 76
+sname.hAlign = "left"
+sname.vAlign = "bottom"
+sname.positionY = 110
+sname.positionX = 20
+sname.fontSize = 25
+sname.color = Color4.Black()
+
+const NextButton0 = new UIImage(canvas, imageTexture)
+NextButton0.width = 76
+NextButton0.height = 76
+NextButton0.hAlign = "left"
+NextButton0.vAlign = "bottom"
+NextButton0.positionY = 100
+NextButton0.positionX = 10
+NextButton0.sourceWidth = 75
+NextButton0.sourceHeight = 75
+NextButton0.visible = false
+
     openExternalURL("https://astar.network/")
   },
     { hoverText: "Astar Network!",
