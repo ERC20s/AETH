@@ -7,8 +7,10 @@ getUserPublicKey
 
 Display the parachain balance the same as the players public key.
 
-Display data about parachain.
-(Number of holders)
+Test a meta transaction.
+
+<!-- Display data about parachain. -->
+<!-- (Number of holders) -->
 
 
 [Butter]
