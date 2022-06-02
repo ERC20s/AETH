@@ -1,6 +1,7 @@
 import { movePlayerTo } from '@decentraland/RestrictedActions'
 import { TriggeredPlatform } from './triggeredPlatform'
 import * as utils from '@dcl/ecs-scene-utils'
+import * as EthereumController from "@decentraland/EthereumController"
 
 const camera = Camera.instance
 
@@ -27,6 +28,21 @@ monkey.addComponent(new Transform({ position: new Vector3(200, 0, 40), rotation:
 monkey.addComponent(
   new OnPointerDown(() => {
     // openExternalURL("https://polkadot.network/")
+
+
+    const messageToSign = `# DCL Signed message
+    Attacker: 10
+    Defender: 123
+    Timestamp: 1512345678`
+    
+    let eth = EthereumController
+    
+    executeTask(async () => {
+      const convertedMessage = await eth.convertMessageToObject(messageToSign)
+      const { message, signature } = await eth.signMessage(convertedMessage)
+      log({ message, signature })
+    })
+
   }, {
     hoverText: "Buy this NFT!",
     distance: 300
