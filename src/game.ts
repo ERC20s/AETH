@@ -1,4 +1,12 @@
 import { movePlayerTo } from '@decentraland/RestrictedActions'
+import { getUserAccount } from "@decentraland/EthereumController"
+// import * as EthereumController from "@decentraland/EthereumController"
+import { RequestManager, HTTPProvider } from 'eth-connect'
+
+const provider = 'https://matic-mumbai.chainstacklabs.com'
+const providerInstance = new HTTPProvider(provider)
+const requestManager = new RequestManager(providerInstance)
+
 
 const camera = Camera.instance
 
@@ -66,18 +74,27 @@ items2.addComponent(
 
 engine.addEntity(items2);
 
-// const items2 = new Entity();
-// items2.addComponent(new GLTFShape("models/monkey.glb"))
-// items2.addComponent(new Transform({ position: new Vector3(200, 1, 48), rotation: Quaternion.Euler(0, 90, 0) }))
-// items2.addComponent(
-//   new OnPointerDown(() => {
-//     openExternalURL("https://tofunft.com/collection/astardegens/items")
-//   }, {
-//     hoverText: "Check out our NFT collection!",
-//     distance: 100
-//   })
-// )
-// engine.addEntity(items2);
+const items2 = new Entity();
+items2.addComponent(new GLTFShape("models/monkey.glb"))
+items2.addComponent(new Transform({ position: new Vector3(200, 1, 48), rotation: Quaternion.Euler(0, 90, 0) }))
+items2.addComponent(
+  new OnPointerDown(async () => {
+    try {
+      const address = await getUserAccount()
+      // const balance = await getUserBalance()
+      log(address) 
+      const someBalance = await requestManager.eth_getBalance(address)
+      log(someBalance)
+    } catch (error) {
+      log(error.toString())
+    }
+    // openExternalURL("https://tofunft.com/collection/astardegens/items")
+  }, {
+    hoverText: "Check out our NFT collection!",
+    distance: 100
+  })
+)
+engine.addEntity(items2);
 
 // engine.addSystem(new SomeSystem(items2))
 
