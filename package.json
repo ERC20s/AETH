@@ -22,9 +22,11 @@
     "yarn": "please use npm"
   },
   "dependencies": {
-    "eth-connect": "^6.0.3"
+    "eth-connect": "^6.0.3",
+    "@dcl/ecs-scene-utils": "^1.7.5"
   },
   "bundledDependencies": [
-    "eth-connect"
+    "eth-connect",
+    "@dcl/ecs-scene-utils"
   ]
 }
