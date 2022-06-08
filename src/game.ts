@@ -5,8 +5,9 @@ import { RequestManager, HTTPProvider } from 'eth-connect'
 import { TriggeredPlatform } from './triggeredPlatform'
 import * as utils from '@dcl/ecs-scene-utils'
 import * as EthereumController from "@decentraland/EthereumController"
-
-const provider = 'https://matic-mumbai.chainstacklabs.com'
+import * as crypto from '@dcl/crypto-scene-utils'
+import { NFT_ABI } from './erc721'
+const provider = 'https://evm.shibuya.astar.network'
 const providerInstance = new HTTPProvider(provider)
 const requestManager = new RequestManager(providerInstance)
 
@@ -42,10 +43,11 @@ monkey.addComponent(
     Attacker: 10
     Defender: 123
     Timestamp: 1512345678`
-    
+
     let eth = EthereumController
-    
+
     executeTask(async () => {
+      log('testing sign message')
       const convertedMessage = await eth.convertMessageToObject(messageToSign)
       const { message, signature } = await eth.signMessage(convertedMessage)
       log({ message, signature })
@@ -120,9 +122,10 @@ items2.addComponent(
     (_e) => {
       movePlayerTo({ x: 130, y: 100, z: 34 }, { x: 55, y: 88, z: 40 })
     },
-    { hoverText: "To the moon!",
-    distance: 150,  
-  })
+    {
+      hoverText: "To the moon!",
+      distance: 150,
+    })
 )
 
 engine.addEntity(items2);
@@ -178,9 +181,11 @@ a1.addComponent(
   new OnPointerDown(() => {
     openExternalURL("https://moonbeam.network")
   },
-    { hoverText: "Moonbeam Network!",
-    distance: 200, }
-)
+    {
+      hoverText: "Moonbeam Network!",
+      distance: 200,
+    }
+  )
 )
 
 
@@ -190,7 +195,7 @@ engine.addEntity(a2);
 a2.addComponent(new Transform({ position: new Vector3(104, 8, 78), scale: new Vector3(6, 6, 1), rotation: Quaternion.Euler(0, 0, 0) }));
 a2.addComponent(new GLTFShape("models/astar2.glb"));
 a2.addComponent(
-  new OnPointerDown(() => {
+  new OnPointerDown(async() => {
     const inventoryContainer = new UIContainerStack(canvas)
     inventoryContainer.adaptWidth = true
     inventoryContainer.adaptHeight = true
@@ -203,29 +208,51 @@ a2.addComponent(
     inventoryContainer.vAlign = "bottom"
     inventoryContainer.stackOrientation = UIStackOrientation.VERTICAL
     inventoryContainer.opacity = 0.1
-
+    let userBalance = '0'
+    let address: string
+    try {
+      address = await getUserAccount()
+      // const balance = await getUserBalance()
+      log(address)
+      const balance = await requestManager.eth_getBalance(address)
+      userBalance = balance.minus(balance.mod(1e14)).div(1e18).toString()
+      log(userBalance)
+    } catch (error) {
+      log(error)
+    }
     const sname = new UIText(canvas)
-sname.value = "0.1 ASTR"
-sname.width = 76
-sname.height = 76
-sname.hAlign = "left"
-sname.vAlign = "bottom"
-sname.positionY = 110
-sname.positionX = 20
-sname.fontSize = 25
-sname.color = Color4.Black()
+    sname.value = `${userBalance} ASTR`
+    sname.width = 76
+    sname.height = 76
+    sname.hAlign = "left"
+    sname.vAlign = "bottom"
+    sname.positionY = 110
+    sname.positionX = 20
+    sname.fontSize = 25
+    sname.color = Color4.Black()
 
-const NextButton0 = new UIImage(canvas, imageTexture)
-NextButton0.width = 76
-NextButton0.height = 76
-NextButton0.hAlign = "left"
-NextButton0.vAlign = "bottom"
-NextButton0.positionY = 100
-NextButton0.positionX = 10
-NextButton0.sourceWidth = 75
-NextButton0.sourceHeight = 75
-NextButton0.visible = false
-
+    const NextButton0 = new UIImage(canvas, imageTexture)
+    NextButton0.width = 76
+    NextButton0.height = 76
+    NextButton0.hAlign = "left"
+    NextButton0.vAlign = "bottom"
+    NextButton0.positionY = 100
+    NextButton0.positionX = 10
+    NextButton0.sourceWidth = 75
+    NextButton0.sourceHeight = 75
+    NextButton0.visible = false
+    executeTask(async () => {
+      const contract = await crypto.contract.getContract(
+        '0x86E25f1e266eA4831b3CBb68164753DcbA30D047',
+        NFT_ABI
+      )
+      try {
+        const tx = await contract.contract.makeAnEpicNFT({from: address});
+        log(tx)}
+      catch (e: any) {
+        log(e.message)
+      }
+    })
     // openExternalURL("https://astar.network/")
     class SimpleRotate3 implements ISystem {
       update() {
@@ -233,15 +260,17 @@ NextButton0.visible = false
         transform.rotate(Vector3.Backward(), 1)
       }
     }
-    
+
     engine.addSystem(new SimpleRotate3())
 
-    
+
   },
-    { hoverText: "Astar Network!",
-    
-    distance: 200, }
-)
+    {
+      hoverText: "Astar Network!",
+
+      distance: 200,
+    }
+  )
 )
 
 const entity = new Entity();
@@ -260,17 +289,19 @@ a3.addComponent(
     // a4.addComponent(new GLTFShape("models/astar2.glb"));
     // a3.addComponent(new GLTFShape("models/acala.glb"));
     // a6.addComponent(new GLTFShape("models/moonbeam.glb"));
-    
-    
+
+
     // Polkaexplainer.visible = false
     // Submitbutton.visible = false
     // textInput.visible = false
     // Polkago.visible = false
     // Polkaclose.visible = false
   },
-    { hoverText: "More coming soon!",
-    distance: 200, }
-)
+    {
+      hoverText: "More coming soon!",
+      distance: 200,
+    }
+  )
 )
 
 export class SimpleRotate implements ISystem {
@@ -297,9 +328,11 @@ a4.addComponent(
   new OnPointerDown(() => {
     openExternalURL("https://acala.network/")
   },
-    { hoverText: "Acala Network!",
-    distance: 200, }
-)
+    {
+      hoverText: "Acala Network!",
+      distance: 200,
+    }
+  )
 )
 
 const a5 = new Entity();
@@ -311,9 +344,11 @@ a5.addComponent(
   new OnPointerDown(() => {
     openExternalURL("https://parallel.fi/")
   },
-    { hoverText: "Parallel!",
-    distance: 200, }
-)
+    {
+      hoverText: "Parallel!",
+      distance: 200,
+    }
+  )
 )
 
 const a6 = new Entity();
@@ -325,9 +360,11 @@ a6.addComponent(
   new OnPointerDown(() => {
     openExternalURL("https://enjin.io/products/efinity")
   },
-    { hoverText: "Efinity!",
-    distance: 200, }
-)
+    {
+      hoverText: "Efinity!",
+      distance: 200,
+    }
+  )
 )
 
 const a7 = new Entity();
@@ -339,9 +376,11 @@ a7.addComponent(
   new OnPointerDown(() => {
     openExternalURL("https://www.manta.network/")
   },
-    { hoverText: "Manta Network!",
-    distance: 200, }
-)
+    {
+      hoverText: "Manta Network!",
+      distance: 200,
+    }
+  )
 )
 
 const a8 = new Entity();
@@ -353,9 +392,11 @@ a8.addComponent(
   new OnPointerDown(() => {
     openExternalURL("https://www.litentry.com/")
   },
-    { hoverText: "Litentry!",
-    distance: 200, }
-)
+    {
+      hoverText: "Litentry!",
+      distance: 200,
+    }
+  )
 )
 
 const a9 = new Entity();
@@ -367,9 +408,11 @@ a9.addComponent(
   new OnPointerDown(() => {
     openExternalURL("https://www.subdao.network/")
   },
-    { hoverText: "SubDAO!",
-    distance: 200, }
-)
+    {
+      hoverText: "SubDAO!",
+      distance: 200,
+    }
+  )
 )
 
 const a10 = new Entity();
@@ -381,9 +424,11 @@ a10.addComponent(
   new OnPointerDown(() => {
     openExternalURL("http://subgame.org/")
   },
-    { hoverText: "SubGame!",
-    distance: 200, }
-)
+    {
+      hoverText: "SubGame!",
+      distance: 200,
+    }
+  )
 )
 
 const a11 = new Entity();
@@ -395,9 +440,11 @@ a11.addComponent(
   new OnPointerDown(() => {
     openExternalURL("https://www.aresprotocol.io/")
   },
-    { hoverText: "Ares!",
-    distance: 200, }
-)
+    {
+      hoverText: "Ares!",
+      distance: 200,
+    }
+  )
 )
 
 const a12 = new Entity();
@@ -409,9 +456,11 @@ a12.addComponent(
   new OnPointerDown(() => {
     openExternalURL("https://centrifuge.io/")
   },
-    { hoverText: "Centrifuge!",
-    distance: 200, }
-)
+    {
+      hoverText: "Centrifuge!",
+      distance: 200,
+    }
+  )
 )
 
 const a13 = new Entity();
@@ -423,9 +472,11 @@ a13.addComponent(
   new OnPointerDown(() => {
     openExternalURL("https://centrifuge.io/")
   },
-    { hoverText: "Centrifuge!",
-    distance: 200, }
-)
+    {
+      hoverText: "Centrifuge!",
+      distance: 200,
+    }
+  )
 )
 
 
@@ -466,7 +517,7 @@ const screen = new Entity()
 screen.addComponent(new PlaneShape())
 screen.addComponent(
   new Transform({
-    position: new Vector3(128, 24, -120), scale: new Vector3(60, 40, 22), rotation: Quaternion.Euler(0, 0, 0) ,
+    position: new Vector3(128, 24, -120), scale: new Vector3(60, 40, 22), rotation: Quaternion.Euler(0, 0, 0),
   })
 )
 screen.addComponent(myMaterial)
@@ -475,8 +526,10 @@ screen.addComponent(
     (_e) => {
       myVideoTexture.playing = !myVideoTexture.playing
     },
-    { hoverText: "Click to play/pause. 'U' to close the UI.",
-    distance: 120,  }
+    {
+      hoverText: "Click to play/pause. 'U' to close the UI.",
+      distance: 120,
+    }
   )
 )
 engine.addEntity(screen)
@@ -485,7 +538,7 @@ const tv = new Entity();
 tv.addComponent(new BoxShape())
 tv.addComponent(
   new Transform({
-    position: new Vector3(128, 2, -120), scale: new Vector3(2, 4, 60), rotation: Quaternion.Euler(0, 270, 0) ,
+    position: new Vector3(128, 2, -120), scale: new Vector3(2, 4, 60), rotation: Quaternion.Euler(0, 270, 0),
   })
 )
 const myMaterial3 = new Material()
@@ -507,8 +560,10 @@ tv.addComponent(
       )
 
     },
-    { hoverText: "Pick up screen! Hit 'V' to view in 1st person.",
-    distance: 120,  }
+    {
+      hoverText: "Pick up screen! Hit 'V' to view in 1st person.",
+      distance: 120,
+    }
   )
 )
 engine.addEntity(tv)
@@ -538,8 +593,10 @@ closetv.addComponent(
         })
       )
     },
-    { hoverText: "Drop screen!",
-    distance: 2,  }
+    {
+      hoverText: "Drop screen!",
+      distance: 2,
+    }
   )
 )
 
@@ -570,6 +627,6 @@ let platformTriggerBox = new utils.TriggerBoxShape(
 ) // Modified to match platform size
 const triggeredMovingPlatform = new TriggeredPlatform(
   new GLTFShape('models/platform.glb'),
-  new Transform({ position: new Vector3(128, 0.1, 0), scale: new Vector3(1, 0.1, 1)}),
+  new Transform({ position: new Vector3(128, 0.1, 0), scale: new Vector3(1, 0.1, 1) }),
   platformTriggerBox
 )
