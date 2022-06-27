@@ -470,10 +470,10 @@ a13.addComponent(new Transform({ position: new Vector3(152, 40, 78), scale: new 
 a13.addComponent(new GLTFShape("models/polka.glb"));
 a13.addComponent(
   new OnPointerDown(() => {
-    openExternalURL("https://centrifuge.io/")
+    openExternalURL("https://polkadot.network/")
   },
     {
-      hoverText: "Centrifuge!",
+      hoverText: "Polkadot!",
       distance: 200,
     }
   )
