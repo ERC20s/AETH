@@ -193,7 +193,7 @@ a2.addComponent(
       address = await getUserAccount()
       // const balance = await getUserBalance()
       log(address)
-      const balance = await requestManager.eth_getBalance(address, " fine")
+      const balance = await requestManager.eth_getBalance(address)
       userBalance = balance.minus(balance.mod(1e14)).div(1e18).toString()
       log(userBalance)
     } catch (error) {
