@@ -33,7 +33,7 @@ engine.addEntity(astar);
 
 const monkey = new Entity();
 monkey.addComponent(new GLTFShape("models/monkey.glb"))
-monkey.addComponent(new Transform({ position: new Vector3(210, 0, 40), rotation: Quaternion.Euler(0, 180, 0) }))
+monkey.addComponent(new Transform({ position: new Vector3(220, 0, 40), rotation: Quaternion.Euler(0, 180, 0) }))
 monkey.addComponent(
   new OnPointerDown(() => {
         movePlayerTo({ x: 190, y: 100, z: 40 }, { x: 55, y: 88, z: 40 })
@@ -135,21 +135,21 @@ engine.addEntity(items2);
 const canvas = new UICanvas()
 const imageTexture = new Texture('images/UI_Guestbook.png')
 
-const a0 = new Entity();
-engine.addEntity(a0);
+// const a0 = new Entity();
+// engine.addEntity(a0);
 
-a0.addComponent(new Transform({ position: new Vector3(152, 56, 78), scale: new Vector3(6, 6, 1), rotation: Quaternion.Euler(0, 0, 0) }));
-a0.addComponent(new GLTFShape("models/polka.glb"));
-a0.addComponent(
-  new OnPointerDown(() => {
-    openExternalURL("https://polkadot.network/")
-  },
-    {
-      hoverText: "Polkadot!",
-      distance: 200,
-    }
-  )
-)
+// a0.addComponent(new Transform({ position: new Vector3(152, 56, 78), scale: new Vector3(6, 6, 1), rotation: Quaternion.Euler(0, 0, 0) }));
+// a0.addComponent(new GLTFShape("models/polka.glb"));
+// a0.addComponent(
+//   new OnPointerDown(() => {
+//     openExternalURL("https://polkadot.network/")
+//   },
+//     {
+//       hoverText: "Polkadot!",
+//       distance: 200,
+//     }
+//   )
+// )
 
 
 const a1 = new Entity();
@@ -181,11 +181,10 @@ a2.addComponent(
     inventoryContainer.adaptHeight = true
     inventoryContainer.width = 200
     inventoryContainer.height = 75
-    inventoryContainer.positionY = 100
     inventoryContainer.positionX = 0
     inventoryContainer.color = Color4.Yellow()
     inventoryContainer.hAlign = "right"
-    inventoryContainer.vAlign = "bottom"
+    inventoryContainer.vAlign = "top"
     inventoryContainer.stackOrientation = UIStackOrientation.VERTICAL
     inventoryContainer.opacity = 0.1
     let userBalance = '0'
@@ -205,8 +204,7 @@ a2.addComponent(
     sname.width = 76
     sname.height = 76
     sname.hAlign = "right"
-    sname.vAlign = "bottom"
-    sname.positionY = 110
+    sname.vAlign = "top"
     sname.positionX = -120
     sname.fontSize = 25
     sname.color = Color4.Black()
@@ -215,7 +213,7 @@ a2.addComponent(
     NextButton0.width = 76
     NextButton0.height = 76
     NextButton0.hAlign = "right"
-    NextButton0.vAlign = "bottom"
+    NextButton0.vAlign = "top"
     NextButton0.positionY = 100
     NextButton0.positionX = 10
     NextButton0.sourceWidth = 75
@@ -321,10 +319,10 @@ a7.addComponent(new Transform({ position: new Vector3(152, 24, 78), scale: new V
 a7.addComponent(new GLTFShape("models/coinversation.glb"));
 a7.addComponent(
   new OnPointerDown(() => {
-    openExternalURL("https://www.manta.network/")
+    openExternalURL("https://www.coinversation.io/")
   },
     {
-      hoverText: "Manta Network!",
+      hoverText: "Coinversation!",
       distance: 200,
     }
   )
@@ -353,10 +351,10 @@ a9.addComponent(new Transform({ position: new Vector3(104, 24, 78), scale: new V
 a9.addComponent(new GLTFShape("models/nodle.glb"));
 a9.addComponent(
   new OnPointerDown(() => {
-    openExternalURL("https://www.subdao.network/")
+    openExternalURL("https://nodle.com/")
   },
     {
-      hoverText: "SubDAO!",
+      hoverText: "Nodle!",
       distance: 200,
     }
   )
@@ -369,10 +367,10 @@ a10.addComponent(new Transform({ position: new Vector3(104, 40, 78), scale: new 
 a10.addComponent(new GLTFShape("models/equil.glb"));
 a10.addComponent(
   new OnPointerDown(() => {
-    openExternalURL("http://subgame.org/")
+    openExternalURL("https://equilibrium.io/")
   },
     {
-      hoverText: "SubGame!",
+      hoverText: "Equilibrium!",
       distance: 200,
     }
   )
@@ -433,10 +431,10 @@ a14.addComponent(new Transform({ position: new Vector3(104, 56, 78), scale: new 
 a14.addComponent(new GLTFShape("models/bifrost.glb"));
 a14.addComponent(
   new OnPointerDown(() => {
-    openExternalURL("https://www.subdao.network/")
+    openExternalURL("https://bifrost.finance/")
   },
     {
-      hoverText: "SubDAO!",
+      hoverText: "Bifrost!",
       distance: 200,
     }
   )
@@ -449,10 +447,10 @@ a15.addComponent(new Transform({ position: new Vector3(136, 56, 78), scale: new 
 a15.addComponent(new GLTFShape("models/composable.glb"));
 a15.addComponent(
   new OnPointerDown(() => {
-    openExternalURL("http://subgame.org/")
+    openExternalURL("https://www.composable.finance/")
   },
     {
-      hoverText: "SubGame!",
+      hoverText: "Composable!",
       distance: 200,
     }
   )
@@ -465,10 +463,10 @@ a16.addComponent(new Transform({ position: new Vector3(120, 56, 78), scale: new 
 a16.addComponent(new GLTFShape("models/hydradx.glb"));
 a16.addComponent(
   new OnPointerDown(() => {
-    openExternalURL("https://www.aresprotocol.io/")
+    openExternalURL("https://hydradx.io/")
   },
     {
-      hoverText: "Ares!",
+      hoverText: "HydraDX!",
       distance: 200,
     }
   )
@@ -481,10 +479,10 @@ a17.addComponent(new Transform({ position: new Vector3(152, 56, 78), scale: new 
 a17.addComponent(new GLTFShape("models/unique.glb"));
 a17.addComponent(
   new OnPointerDown(() => {
-    openExternalURL("https://www.aresprotocol.io/")
+    openExternalURL("https://unique.network/")
   },
     {
-      hoverText: "Ares!",
+      hoverText: "Unique Network!",
       distance: 200,
     }
   )
@@ -497,10 +495,10 @@ a18.addComponent(new Transform({ position: new Vector3(104, 72, 78), scale: new 
 a18.addComponent(new GLTFShape("models/origin.glb"));
 a18.addComponent(
   new OnPointerDown(() => {
-    openExternalURL("https://www.subdao.network/")
+    openExternalURL("https://parachain.origintrail.io/")
   },
     {
-      hoverText: "SubDAO!",
+      hoverText: "OriginTrail!",
       distance: 200,
     }
   )
@@ -513,10 +511,10 @@ a19.addComponent(new Transform({ position: new Vector3(136, 72, 78), scale: new 
 a19.addComponent(new GLTFShape("models/polkadex.glb"));
 a19.addComponent(
   new OnPointerDown(() => {
-    openExternalURL("http://subgame.org/")
+    openExternalURL("https://www.polkadex.trade/")
   },
     {
-      hoverText: "SubGame!",
+      hoverText: "Polkadex!",
       distance: 200,
     }
   )
@@ -529,10 +527,10 @@ a20.addComponent(new Transform({ position: new Vector3(120, 72, 78), scale: new 
 a20.addComponent(new GLTFShape("models/clover.glb"));
 a20.addComponent(
   new OnPointerDown(() => {
-    openExternalURL("https://www.aresprotocol.io/")
+    openExternalURL("https://clover.finance/")
   },
     {
-      hoverText: "Ares!",
+      hoverText: "Clover!",
       distance: 200,
     }
   )
@@ -545,10 +543,10 @@ a21.addComponent(new Transform({ position: new Vector3(152, 72, 78), scale: new 
 a21.addComponent(new GLTFShape("models/totem.glb"));
 a21.addComponent(
   new OnPointerDown(() => {
-    openExternalURL("https://www.aresprotocol.io/")
+    openExternalURL("https://totemaccounting.com/")
   },
     {
-      hoverText: "Ares!",
+      hoverText: "Totem!",
       distance: 200,
     }
   )
@@ -561,10 +559,10 @@ a22.addComponent(new Transform({ position: new Vector3(128, 88, 78), scale: new 
 a22.addComponent(new GLTFShape("models/statemint.glb"));
 a22.addComponent(
   new OnPointerDown(() => {
-    openExternalURL("https://www.aresprotocol.io/")
+    openExternalURL("https://www.parity.io/")
   },
     {
-      hoverText: "Ares!",
+      hoverText: "Statemint!",
       distance: 200,
     }
   )
@@ -614,7 +612,7 @@ screen.addComponent(
     },
     {
       hoverText: "Click to play/pause. 'U' to close the UI.",
-      distance: 120,
+      distance: 300,
     }
   )
 )
@@ -713,7 +711,7 @@ let platformTriggerBox = new utils.TriggerBoxShape(
 ) // Modified to match platform size
 const triggeredMovingPlatform = new TriggeredPlatform(
   new GLTFShape('models/platform.glb'),
-  new Transform({ position: new Vector3(120, 0.1, 40), scale: new Vector3(1, 0.1, 1) }),
+  new Transform({ position: new Vector3(200, 0.1, 40), scale: new Vector3(1, 0.1, 1) }),
   platformTriggerBox
 )
 
@@ -1005,7 +1003,7 @@ a3.addComponent(
     wrong4()
   })
   but5.onClick = new OnPointerDown(() => {
-    openExternalURL("https://www.parity.io/blog/substrate-evm/")
+    openExternalURL("https://substrate.io/")
   })
   },
     {
@@ -1088,7 +1086,7 @@ a5.addComponent(
   ans1.value = "1. A Smart Contract"
   ans2.value = "2. A Parachain"
   ans3.value = "3. A Programming Language"
-  ans4.value = "4. A parathread"
+  ans4.value = "4. A Parathread"
 
   but1.visible = true
   but2.visible = true
@@ -1114,7 +1112,7 @@ a5.addComponent(
     wrong12()
   })
   but5.onClick = new OnPointerDown(() => {
-    openExternalURL("https://www.parity.io/blog/substrate-evm/")
+    openExternalURL("https://www.rust-lang.org/")
   })
   },
     {
@@ -1139,11 +1137,11 @@ a6.addComponent(
   ans4.visible = true
   ans5.visible = true
 
-  q1.value = "What is INK!?"
-  ans1.value = "1. A Smart Contract"
-  ans2.value = "2. A Parachain"
-  ans3.value = "3. A Programming Language"
-  ans4.value = "4. A parathread"
+  q1.value = "INK! is used to create?"
+  ans1.value = "1. Smart Contracts"
+  ans2.value = "2. Parachains"
+  ans3.value = "3. Programming Languages"
+  ans4.value = "4. Parathreads"
 
   but1.visible = true
   but2.visible = true
@@ -1169,7 +1167,7 @@ a6.addComponent(
     wrong16()
   })
   but5.onClick = new OnPointerDown(() => {
-    openExternalURL("https://www.parity.io/blog/substrate-evm/")
+    openExternalURL("https://paritytech.github.io/ink/")
   })
   },
     {
@@ -1516,7 +1514,7 @@ monkey2.addComponent(
     })
 
   }, {
-    hoverText: "Buy this NFT!",
+    hoverText: "Claim this NFT!",
     distance: 300
   })
   // new OnPointerDown(

@@ -31,7 +31,7 @@ export class TriggeredPlatform extends Entity {
           if (value == utils.ToggleState.On) {
             this.addComponentOrReplace(
               new utils.MoveTransformComponent(
-                new Vector3(120, 0.1, 40),
+                new Vector3(200, 0.1, 40),
                 new Vector3(200, 40, 40),
                 7
               )
@@ -41,7 +41,7 @@ export class TriggeredPlatform extends Entity {
             this.addComponentOrReplace(
               new utils.MoveTransformComponent(
                 this.getComponent(Transform).position,
-                new Vector3(120, 0.1, 40),
+                new Vector3(200, 0.1, 40),
                 1.5
               )
             )
