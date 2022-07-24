@@ -26,6 +26,20 @@ machine.addComponent(
 )
 )
 
+const key = new Entity();
+
+key.addComponent(new GLTFShape("models/key.glb"));
+key.addComponent(new Transform({ position: new Vector3(36, 0, -16), scale: new Vector3(0.2, 0.2, 0.2)}));
+key.addComponent(
+  new OnPointerDown(() => {
+    openExternalURL("https://talisman.xyz/")
+  },
+    { hoverText: "We are talisman !",
+    distance: 400, }
+)
+)
+engine.addEntity(key);
+
 const camera = Camera.instance
 
 class SomeSystem implements ISystem {
