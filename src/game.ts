@@ -1,16 +1,30 @@
 import { movePlayerTo } from '@decentraland/RestrictedActions'
 import { getUserAccount } from "@decentraland/EthereumController"
-// import * as EthereumController from "@decentraland/EthereumController"
-import { RequestManager, HTTPProvider } from 'eth-connect'
+import { RequestManager, HTTPProvider, EthBlockFilter } from 'eth-connect'
 import { TriggeredPlatform } from './triggeredPlatform'
 import * as utils from '@dcl/ecs-scene-utils'
 import * as EthereumController from "@decentraland/EthereumController"
 import * as crypto from '@dcl/crypto-scene-utils'
 import { NFT_ABI } from './erc721'
+
+
 const provider = 'https://evm.shibuya.astar.network'
 const providerInstance = new HTTPProvider(provider)
 const requestManager = new RequestManager(providerInstance)
 
+const machine = new Entity();
+engine.addEntity(machine);
+machine.addComponent(new GLTFShape("models/machine.glb"));
+machine.addComponent(new Transform({ position: new Vector3(204, 0, -24), scale: new Vector3(1, 1, 1), rotation: Quaternion.Euler(0, 270, 0) }));
+
+machine.addComponent(
+  new OnPointerDown(() => {
+    openExternalURL('https://apps.standard.tech/trade')
+  },
+    { hoverText: "To the DEX!",
+    distance: 500, }
+)
+)
 
 const camera = Camera.instance
 
@@ -41,13 +55,6 @@ monkey.addComponent(
     hoverText: "Climb to the top!",
     distance: 300
   })
-  // new OnPointerDown(
-  //   (_e) => {
-  //     movePlayerTo({ x: 150, y: 100, z: -40 }, { x: 55, y: 88, z: 40 })
-  //   },
-  //   { hoverText: "To the moon!",
-  //   distance: 150,  
-  // })
 )
 engine.addEntity(monkey);
 
@@ -61,13 +68,7 @@ items.addComponent(
     hoverText: "Learn more about polkadot!",
     distance: 300
   })
-  // new OnPointerDown(
-  //   (_e) => {
-  //     movePlayerTo({ x: 150, y: 100, z: -40 }, { x: 55, y: 88, z: 40 })
-  //   },
-  //   { hoverText: "To the moon!",
-  //   distance: 150,  
-  // })
+
 )
 
 engine.addEntity(items);
@@ -76,12 +77,7 @@ const items2 = new Entity();
 items2.addComponent(new GLTFShape("models/word2.glb"))
 items2.addComponent(new Transform({ position: new Vector3(3, 0, 1), rotation: Quaternion.Euler(0, 180, 0) }))
 items2.addComponent(
-  // new OnPointerDown(() => {
-  //   openExternalURL("https://astar.network/")
-  // }, {
-  //   hoverText: "Learn more about the Astar Network!",
-  //   distance: 100
-  // })
+
   new OnPointerDown(
     (_e) => {
       movePlayerTo({ x: 130, y: 100, z: 34 }, { x: 55, y: 88, z: 40 })
@@ -93,43 +89,6 @@ items2.addComponent(
 )
 
 engine.addEntity(items2);
-
-// const items2 = new Entity();
-// items2.addComponent(new GLTFShape("models/monkey.glb"))
-// items2.addComponent(new Transform({ position: new Vector3(200, 1, 48), rotation: Quaternion.Euler(0, 90, 0) }))
-// items2.addComponent(
-//   new OnPointerDown(async () => {
-//     try {
-//       const address = await getUserAccount()
-//       // const balance = await getUserBalance()
-//       log(address) 
-//       const someBalance = await requestManager.eth_getBalance(address)
-//       log(someBalance)
-//     } catch (error) {
-//       log(error.toString())
-//     }
-//     // openExternalURL("https://tofunft.com/collection/astardegens/items")
-//   }, {
-//     hoverText: "Check out our NFT collection!",
-//     distance: 100
-//   })
-// )
-// engine.addEntity(items2);
-
-// engine.addSystem(new SomeSystem(items2))
-
-// const socialDiscord = new Entity();
-// socialDiscord.addComponent(new GLTFShape("models/discord.glb"))
-// socialDiscord.addComponent(new Transform({ position: new Vector3(128, 12, 78), scale: new Vector3(10, 10, 1), rotation: Quaternion.Euler(0, 0, 0) }));
-// socialDiscord.addComponent(
-//   new OnPointerDown(() => {
-//     openExternalURL('https://discord.gg/fDjRg4XKRF')
-//   }, {
-//     hoverText: 'Check out the degens discord community',
-//     distance: 100
-//   })
-// )
-// engine.addEntity(socialDiscord);
 
 
 const canvas = new UICanvas()
@@ -176,6 +135,10 @@ a2.addComponent(new Transform({ position: new Vector3(104, 8, 78), scale: new Ve
 a2.addComponent(new GLTFShape("models/astar2.glb"));
 a2.addComponent(
   new OnPointerDown(async() => {
+
+
+const myMaterial = new BasicMaterial()
+myMaterial.texture = myVideoTexture
     const inventoryContainer = new UIContainerStack(canvas)
     inventoryContainer.adaptWidth = true
     inventoryContainer.adaptHeight = true
@@ -193,7 +156,7 @@ a2.addComponent(
       address = await getUserAccount()
       // const balance = await getUserBalance()
       log(address)
-      const balance = await requestManager.eth_getBalance(address)
+      const balance = await requestManager.eth_getBalance(address, address)
       userBalance = balance.minus(balance.mod(1e14)).div(1e18).toString()
       log(userBalance)
     } catch (error) {
@@ -218,19 +181,19 @@ a2.addComponent(
     NextButton0.positionX = 10
     NextButton0.sourceWidth = 75
     NextButton0.sourceHeight = 75
-    NextButton0.visible = false
-    executeTask(async () => {
-      const contract = await crypto.contract.getContract(
-        '0x86E25f1e266eA4831b3CBb68164753DcbA30D041',
-        NFT_ABI
-      )
-      try {
-        const tx = await contract.contract.makeAnEpicNFT({from: address});
-        log(tx)}
-      catch (e: any) {
-        log(e.message)
-      }
-    })
+    NextButton0.visible = true
+    // executeTask(async () => {
+    //   const contract = await crypto.contract.getContract(
+    //     '0x86E25f1e266eA4831b3CBb68164753DcbA30D047',
+    //     NFT_ABI
+    //   )
+    //   try {
+    //     const tx = await contract.contract.makeAnEpicNFT({from: address});
+    //     log(tx)}
+    //   catch (e: any) {
+    //     log(e.message)
+    //   }
+    // })
     // openExternalURL("https://astar.network/")
     class SimpleRotate3 implements ISystem {
       update() {
@@ -251,18 +214,6 @@ a2.addComponent(
   )
 )
 
-const entity = new Entity();
-
-
-
-
-
-
-const myEntity = new Entity()
-myEntity.addComponent(new Transform())
-myEntity.addComponent(new BoxShape())
-
-engine.addEntity(myEntity)
 
 const c4 = new Entity();
 engine.addEntity(c4);
@@ -571,33 +522,18 @@ a22.addComponent(
 
 
 
+let vidurl = "polka360.mp4"
 
+let myVideoClip = new VideoClip(vidurl)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const myVideoClip = new VideoClip("polka360.mp4")
-
-const myVideoTexture = new VideoTexture(myVideoClip)
+let myVideoTexture = new VideoTexture(myVideoClip)
 myVideoTexture.playing = false
 // #3
 const myMaterial = new BasicMaterial()
 myMaterial.texture = myVideoTexture
 
 // #4
-const screen = new Entity()
+let screen = new Entity()
 screen.addComponent(new PlaneShape())
 screen.addComponent(
   new Transform({
@@ -612,20 +548,20 @@ screen.addComponent(
     },
     {
       hoverText: "Click to play/pause. 'U' to close the UI.",
-      distance: 300,
+      distance: 600,
     }
   )
 )
 engine.addEntity(screen)
 
-const tv = new Entity();
+let tv = new Entity();
 tv.addComponent(new BoxShape())
 tv.addComponent(
   new Transform({
     position: new Vector3(128, 2, -120), scale: new Vector3(2, 4, 60), rotation: Quaternion.Euler(0, 270, 0),
   })
 )
-const myMaterial3 = new Material()
+let myMaterial3 = new Material()
 myMaterial3.albedoColor = Color3.Red()
 tv.addComponent(myMaterial3)
 tv.addComponent(
@@ -646,7 +582,7 @@ tv.addComponent(
     },
     {
       hoverText: "Pick up screen! Hit 'V' to view in 1st person.",
-      distance: 120,
+      distance: 600,
     }
   )
 )
@@ -688,22 +624,6 @@ closetv.getComponent(PlaneShape).visible = false
 
 engine.addEntity(closetv)
 closetv.setParent(Attachable.AVATAR)
-
-// const avocado4 = new Entity();
-// engine.addEntity(avocado4);
-
-// avocado4.addComponent(new GLTFShape("models/beam2.glb"));
-// avocado4.addComponent(new Transform({ position: new Vector3(128, 1, 0), scale: new Vector3(1,0.35, 1),}));
-
-// avocado4.addComponent(
-//   new OnPointerDown(
-//     (_e) => {
-//       RestrictedActions.movePlayerTo({ x: 45, y: 48, z: 73 }, { x: 45, y: 38, z: 44 })
-//     },
-//     { hoverText: "Go upstairs!",
-//     distance: 200,  }
-//   )
-// )
 
 let platformTriggerBox = new utils.TriggerBoxShape(
   new Vector3(3, 3, 3),
@@ -1517,13 +1437,6 @@ monkey2.addComponent(
     hoverText: "Claim this NFT!",
     distance: 300
   })
-  // new OnPointerDown(
-  //   (_e) => {
-  //     movePlayerTo({ x: 150, y: 100, z: -40 }, { x: 55, y: 88, z: 40 })
-  //   },
-  //   { hoverText: "To the moon!",
-  //   distance: 150,  
-  // })
 )
 engine.addEntity(monkey2);
 }
@@ -1618,7 +1531,7 @@ var wrong16 = function() {
       logo16.addComponent(new GLTFShape("models/logo3.glb"))
     }
 
-    // var d4 = function() {  
+    // var d5 = function() {  
     //   logo13.removeComponent(GLTFShape)
     //   logo14.removeComponent(GLTFShape)        
     //   logo15.removeComponent(GLTFShape)
