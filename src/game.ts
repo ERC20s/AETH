@@ -6,7 +6,9 @@ import * as utils from '@dcl/ecs-scene-utils'
 import * as EthereumController from "@decentraland/EthereumController"
 import * as crypto from '@dcl/crypto-scene-utils'
 import { NFT_ABI } from './erc721'
+import { Standard } from './standard'
 
+export let standard: Standard
 
 const provider = 'https://evm.shibuya.astar.network'
 const providerInstance = new HTTPProvider(provider)
@@ -15,13 +17,15 @@ const requestManager = new RequestManager(providerInstance)
 const machine = new Entity();
 engine.addEntity(machine);
 machine.addComponent(new GLTFShape("models/machine.glb"));
-machine.addComponent(new Transform({ position: new Vector3(204, 0, -24), scale: new Vector3(1, 1, 1), rotation: Quaternion.Euler(0, 270, 0) }));
+machine.addComponent(new Transform({ position: new Vector3(204, 0, -24), scale: new Vector3(4, 4, 4), rotation: Quaternion.Euler(0, 270, 0) }));
 
 machine.addComponent(
   new OnPointerDown(() => {
-    openExternalURL('https://apps.standard.tech/trade')
+    standard = new Standard(
+      new Transform({ position: new Vector3(0, 0, 0) })
+    )
   },
-    { hoverText: "To the DEX!",
+    { hoverText: "Load the store!",
     distance: 500, }
 )
 )
