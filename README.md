@@ -1,10 +1,7 @@
-[binh]
-Relayer
+NODE JS 14+
 
-<!-- Display data about parachain. -->
-<!-- (Number of holders) -->
+git clone https://github.com/ERC20s/AETH
 
+cd AETH
 
-[Butter]
-Migrate the old working backey onto the new server.
-Have a way of filtering through each parachain.
+dcl start
