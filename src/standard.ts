@@ -18,8 +18,8 @@ export class Standard extends Entity {
 
   initWall() {
 
-    this.polka.addComponent(new GLTFShape("models/man2.gltf"))
-    this.polka.addComponent(new Transform({ position: new Vector3(180, 0, -29,), scale: new Vector3(0.02, 0.02, 0.02), rotation: Quaternion.Euler(0, 0, 0) }))
+    this.polka.addComponent(new GLTFShape("models/man4.gltf"))
+    this.polka.addComponent(new Transform({ position: new Vector3(222, -1, -5), scale: new Vector3(0.02, 0.02, 0.02), rotation: Quaternion.Euler(0, 270, 0) }))
     this.polka.setParent(this)
     this.polka.addComponent(
       new OnPointerDown(() => {
@@ -31,7 +31,7 @@ export class Standard extends Entity {
     )
 
     this.polka2.addComponent(new GLTFShape("models/man3.gltf"))
-    this.polka2.addComponent(new Transform({ position: new Vector3(180, 0, -19,), scale: new Vector3(0.02, 0.02, 0.02), rotation: Quaternion.Euler(0, 180, 0) }))
+    this.polka2.addComponent(new Transform({ position: new Vector3(222, -1, -9), scale: new Vector3(0.02, 0.02, 0.02), rotation: Quaternion.Euler(0, 270, 0) }))
     this.polka2.setParent(this)
     this.polka2.addComponent(
       new OnPointerDown(() => {
@@ -43,7 +43,7 @@ export class Standard extends Entity {
     )
 
     this.polka3.addComponent(new GLTFShape("models/man5.gltf"))
-    this.polka3.addComponent(new Transform({ position: new Vector3(170, 0, -29,), scale: new Vector3(0.02, 0.02, 0.02), rotation: Quaternion.Euler(0, 0, 0) }))
+    this.polka3.addComponent(new Transform({ position: new Vector3(222, -1, -13), scale: new Vector3(0.02, 0.02, 0.02), rotation: Quaternion.Euler(0, 270, 0) }))
     this.polka3.setParent(this)
     this.polka3.addComponent(
       new OnPointerDown(() => {
@@ -54,8 +54,8 @@ export class Standard extends Entity {
     )
     )
 
-    this.polka4.addComponent(new GLTFShape("models/man4.gltf"))
-    this.polka4.addComponent(new Transform({ position: new Vector3(170, 0, -19,), scale: new Vector3(0.02, 0.02, 0.02), rotation: Quaternion.Euler(0, 180, 0) }))
+    this.polka4.addComponent(new GLTFShape("models/man2.gltf"))
+    this.polka4.addComponent(new Transform({ position: new Vector3(206, 0, -19,), scale: new Vector3(0.02, 0.02, 0.02), rotation: Quaternion.Euler(0, 270, 0) }))
     this.polka4.setParent(this)
     this.polka4.addComponent(
       new OnPointerDown(() => {

@@ -14,10 +14,26 @@ const provider = 'https://evm.shibuya.astar.network'
 const providerInstance = new HTTPProvider(provider)
 const requestManager = new RequestManager(providerInstance)
 
+const shop = new Entity();
+shop.addComponent(new GLTFShape("models/shop.glb"));
+shop.addComponent(new Transform({ position: new Vector3(216, 0, -8), scale: new Vector3(1, 1, 1), rotation: Quaternion.Euler(0, 0, 0) }));
+
+// shop.addComponent(
+//   new OnPointerDown(() => {
+//     standard = new Standard(
+//       new Transform({ position: new Vector3(0, 0, 0) })
+//     )
+//   },
+//     { hoverText: "Do something..",
+//     distance: 500, }
+// )
+// )
+engine.addEntity(shop);
+
 const machine = new Entity();
 engine.addEntity(machine);
 machine.addComponent(new GLTFShape("models/machine.glb"));
-machine.addComponent(new Transform({ position: new Vector3(204, 0, -24), scale: new Vector3(4, 4, 4), rotation: Quaternion.Euler(0, 270, 0) }));
+machine.addComponent(new Transform({ position: new Vector3(204, 0, -24), scale: new Vector3(1, 1, 1), rotation: Quaternion.Euler(0, 270, 0) }));
 
 machine.addComponent(
   new OnPointerDown(() => {
@@ -65,7 +81,7 @@ engine.addEntity(astar);
 
 const monkey = new Entity();
 monkey.addComponent(new GLTFShape("models/monkey.glb"))
-monkey.addComponent(new Transform({ position: new Vector3(220, 0, 40), rotation: Quaternion.Euler(0, 180, 0) }))
+monkey.addComponent(new Transform({ position: new Vector3(144, 0, 40), rotation: Quaternion.Euler(0, 90, 0) }))
 monkey.addComponent(
   new OnPointerDown(() => {
         movePlayerTo({ x: 190, y: 100, z: 40 }, { x: 55, y: 88, z: 40 })
