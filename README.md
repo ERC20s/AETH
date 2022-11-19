@@ -1,24 +1,18 @@
-NODE JS 14+
+[binh]
+npm install decentraland-ecs@latest breaks the UNO </br>
+Put all of UNO in a single file and fix any errors?</br>
+Load up the scene after the player enters the game to improve loading times (game.ts:77)</br>
 
-git clone https://github.com/ERC20s/AETH
+Create a system to store the individual parachains information and allow each parachain a unique quiz in the parachains folder. (Some stuff might need to be stored on the server?)</br>
+Have the scene change when the parachain logo is selected.</br>
+Improve the code for the current quiz.
 
-npm install -g decentraland@latest
+<!-- Relayer -->
+<!-- Display data about parachain. -->
+<!-- (Number of holders) -->
 
-cd AETH
-
-npm build
-
-dcl start
-
----------------------------------------
-
-Launch a parathread.
-https://docs.substrate.io/tutorials/get-started/build-local-blockchain/
-
-connect the scene to the parathread with rpc.
-
-Allow meta-transactions to be sent via the parathread.
-https://polygonscan.com/address/0x14d4be0ef62fa7a322bbefe115d53a49f2754752#code
-
-Use this guide for reference.
-https://github.com/decentraland/decentraland-l2-utils#send-mana-to-an-address
+[Butter]
+Create some content for each parachain</br>
+Reorganize the scene layout to make it easier for people to understand</br>
+Improve the game logic (pyramid)</br>
+Questions

@@ -1,8 +1,8 @@
 {
   "display": {
-    "title": "Astar Party!",
-    "description": "Astar welcomes cross-parachain communication!",
-    "navmapThumbnail": "images/scene-thumbnail.png",
+    "title": "Polkadot party!",
+    "description": "Answer quizes and win prizes..",
+    "navmapThumbnail": "images/scene2.png",
     "favicon": "favicon_asset"
   },
   "owner": "",
@@ -17,14 +17,14 @@
       "name": "spawn1",
       "default": true,
       "position": {
-        "x": 120,
+        "x": 210,
         "y": 0,
-        "z": 10
+        "z": 37
       },
       "cameraTarget": {
         "x": 8,
         "y": 1,
-        "z": 8
+        "z": 37
       }
     }
   ],
